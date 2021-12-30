@@ -44,20 +44,19 @@ try {
 })
 
 app.get("/folder",async function (req,res) {
+    let filesArray = [],
+
+     n =-1;
+
+    fs.readdirSync(`./Text folder`).forEach((file)=> {
+        n++;
+        filesArray[n] = file;
+    });
     try {
-        fs.readdir(`./Text folder`,{withFileTypes:true},(err,data)=>{
-            if(err){
-                // return res.json(err)
-                console.log(err)
-            }
-            const result = []; 
-            for (const entry of data) {
-                result.push({name: entry.name, type: entry.isDirectory() ? "folder" : "file", ext: path.extname(entry.name)});
-            }
-         res.json(result);
-        })
+        console.log(filesArray);
+        res.json(filesArray)
     } catch (error) {
-        res.json(`status:failed & ${error}`);
+        console.log(error)
     }
    
 })
